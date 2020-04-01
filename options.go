@@ -271,6 +271,16 @@ func (opts *Options) SetEnv(value *Env) {
 	C.rocksdb_options_set_env(opts.c, value.c)
 }
 
+// SetCloudEnv sets the specified object to interact with the environment,
+// e.g. to read/write files, schedule background work, etc.
+// CloudEnv: CloudEnv
+func (opts *Options) SetCloudEnv(value *CloudEnv) {
+	// convert cloudenv to env
+	opts.env = (*Env)(unsafe.Pointer(value))
+
+	C.rocksdb_options_set_cloudenv(opts.c, value.c)
+}
+
 // SetInfoLogLevel sets the info log level.
 // Default: InfoInfoLogLevel
 func (opts *Options) SetInfoLogLevel(value InfoLogLevel) {
